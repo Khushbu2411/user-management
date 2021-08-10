@@ -20,6 +20,11 @@ var url = "mongodb://localhost:27017/user-management";
 //app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/',(req,res) =>{
+  res.render('index');
+    //res.sendFile('./htmldoc/users.html', {root: __dirname}); 
+})
+
 app.get('/create',(req,res) =>{
   res.render('users');
     //res.sendFile('./htmldoc/users.html', {root: __dirname}); 
@@ -51,7 +56,19 @@ app.post('/add',(req,res)=>{
 });
 
 app.get('/users',(req,res) =>{
-  res.render('display');
+  MongoClient.connect(url, function(err, db) {
+    if (err)
+      console.log(err);
+    else{
+      var dbo=db.db("user-management");
+      dbo.collection('user').find({}, function (err, allDetails) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("display", { details: allDetails })
+        }
+    }) 
+    }});
 })
 
 
