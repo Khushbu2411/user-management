@@ -55,7 +55,7 @@ app.post('/add',(req,res)=>{
   res.send('<h1>File successfully inserted.</h1>');
 });
 
-app.get('/users',(req,res,next) =>{
+app.get('/users',(req,res) =>{
   MongoClient.connect(url, function(err, db) {
     if (err)
       console.log(err);
@@ -65,11 +65,15 @@ app.get('/users',(req,res,next) =>{
         if (err) {
             console.log(err);
         } else {
-          res.render("display", {element});    
+          element.forEach(item => {
+            res.send(item);
+          });
         }
-    }) 
-    }});
-})
+        //res.render("display", {element});    
+ 
+    });
+  }});
+});
 
 
 app.listen(3000);
