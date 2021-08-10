@@ -8,16 +8,6 @@ const app= express();
 
 app.use(express.static('htmldoc'));
 
-//connect to db
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/user-management";
-MongoClient.connect(url, function(err, db) {
-  if (err)
-    console.log(err);
-  else{
-    console.log('connected to db');
-  }}
-);
 
 
 //app.use(express.json()); // to support JSON-encoded bodies
@@ -30,7 +20,29 @@ app.get('/create',(req,res) =>{
 
 app.post('/add',(req,res)=>{
   console.log('Got body:', req.body);
-  res.sendStatus(200);
+  var likesArr=req.body.likes.split(",");
+  console.log(likesArr);
+
+  //connect to db
+  var MongoClient = require('mongodb').MongoClient;
+  var url = "mongodb://localhost:27017/user-management";
+  MongoClient.connect(url, function(err, db) {
+    if (err)
+      console.log(err);
+    else{
+      console.log('connected to db');
+      var dbo=db.db("user-management");
+      var myobj = { firstname: req.body.firstName, lastname: req.body.lastName, email: req.body.email,
+        password: req.body.password, mobile: req.body.mobile, likes: likesArr};
+    dbo.collection("user").insertOne(myobj, function(err, res) {
+      if (err) throw err;
+      console.log("1 document inserted");
+      db.close();
+    });
+  
+  }}
+);
+  res.send('<h1>File successfully inserted.</h1>');
 });
 
 
