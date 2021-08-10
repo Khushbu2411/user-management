@@ -8,14 +8,19 @@ const app= express();
 
 app.use(express.static('htmldoc'));
 
+//register view enignes
+app.set('view engine', 'ejs');
 
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/user-management";
 
 //app.use(express.json()); // to support JSON-encoded bodies
 //app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/create',(req,res) =>{
-    res.sendFile('./htmldoc/users.html', {root: __dirname}); 
+  res.render('users');
+    //res.sendFile('./htmldoc/users.html', {root: __dirname}); 
 })
 
 app.post('/add',(req,res)=>{
@@ -24,8 +29,6 @@ app.post('/add',(req,res)=>{
   console.log(likesArr);
 
   //connect to db
-  var MongoClient = require('mongodb').MongoClient;
-  var url = "mongodb://localhost:27017/user-management";
   MongoClient.connect(url, function(err, db) {
     if (err)
       console.log(err);
@@ -44,6 +47,10 @@ app.post('/add',(req,res)=>{
 );
   res.send('<h1>File successfully inserted.</h1>');
 });
+
+app.get('/users',(req,res) =>{
+
+})
 
 
 app.listen(3000);
