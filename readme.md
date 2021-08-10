@@ -8,7 +8,7 @@ Please run below commands
 
 ```bash
 npm install
-``
+```
 ## Usage
 
 ```bash
