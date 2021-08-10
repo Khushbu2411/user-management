@@ -55,17 +55,17 @@ app.post('/add',(req,res)=>{
   res.send('<h1>File successfully inserted.</h1>');
 });
 
-app.get('/users',(req,res) =>{
+app.get('/users',(req,res,next) =>{
   MongoClient.connect(url, function(err, db) {
     if (err)
       console.log(err);
     else{
       var dbo=db.db("user-management");
-      dbo.collection('user').find({}, function (err, allDetails) {
+      dbo.collection('user').find({}, function (err, element) {
         if (err) {
             console.log(err);
         } else {
-            res.render("display", { details: allDetails })
+          res.render("display", {element});    
         }
     }) 
     }});

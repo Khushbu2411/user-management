@@ -13,8 +13,7 @@
         <div>
             <h2>All Users</h2>
             <hr>
-
-            <% if(details!=null) { %>
+            <% if(element!=null) { %>
                 <table>
                     <tr>
                         <th>First Name </th>
@@ -23,20 +22,22 @@
                         <th>Mobile </th>
                         <th>Likes </th>
                     </tr>
-                    <% details.forEach(function(item){ %>
+                    <% element.forEach(item =>{ %>
                         <tr>
-                            <td><%= item.firstname%></td>
+                            <td><%= item.firstname %></td>
                             <td><%= item.lastname %></td>
-                            <td><%= item.email%></td>
+                            <td><%= item.email %></td>
                             <td><%= item.mobile %></td>
                             <td><%= item.likes%></td>
                         </tr>
                     <% }) %>
                 </table>
-            <% } %>
+            <% }else{ %>
+                <h4>There is no data to display</h4>
+                <% } %>
         </div>
+   
 
-        
         <br><br><br><br>
         <footer>
             Copyright &copy; User 2021
