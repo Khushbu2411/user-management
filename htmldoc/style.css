@@ -1,7 +1,45 @@
-body{
-    padding-top: 10%;
-    padding-left: 40%;
+nav{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    text-transform: uppercase;
 }
+
+nav ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+nav li{
+    list-style-type: none;
+    margin-left: 20px;
+}
+
+nav h1{
+ font-size: 1em;
+}
+
+nav p, nav a{
+    color: black;
+    font-style: italic;
+    font-weight: 300;
+}
+
+footer{
+    color: #777;
+    text-align: center;
+    margin: 80px auto 20px;
+}
+
+.container{
+    padding-top: 2%;
+    padding-left: 45%;
+
+}
+
 button{
     margin-top: 20px;
     background: black;

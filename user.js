@@ -6,10 +6,12 @@ var bodyParser = require('body-parser');
 //express app
 const app= express();
 
-app.use(express.static('htmldoc'));
 
 //register view enignes
 app.set('view engine', 'ejs');
+
+app.use(express.static('htmldoc'));
+
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/user-management";
@@ -49,7 +51,7 @@ app.post('/add',(req,res)=>{
 });
 
 app.get('/users',(req,res) =>{
-
+  res.render('display');
 })
 
 
