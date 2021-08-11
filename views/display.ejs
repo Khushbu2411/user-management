@@ -13,7 +13,7 @@
         <div>
             <h2>All Users</h2>
             <hr>
-            <% if(element!=null) { %>
+            <% if(data!=null) { %>
                 <table>
                     <tr>
                         <th>First Name </th>
@@ -22,7 +22,7 @@
                         <th>Mobile </th>
                         <th>Likes </th>
                     </tr>
-                    <% element.forEach(item =>{ %>
+                    <% data.forEach(item =>{ %>
                         <tr>
                             <td><%= item.firstname %></td>
                             <td><%= item.lastname %></td>
