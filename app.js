@@ -1,11 +1,10 @@
-//create node-js server using express
 const express = require('express');
-
-//express app
 const app= express();
  
-//import connection file
-const connectDB = require("./helpers/connectDB");
+//import router file
+var routes=require('./config/routes'); 
+
+app.use("/",routes);
 
 //register view enignes
 app.set('view engine', 'ejs');
@@ -14,47 +13,5 @@ app.set('view engine', 'ejs');
 app.use(express.static('public/css'));
 
 app.use(express.urlencoded({ extended: true }));
-
-//Index page
-app.get('/',(req,res) =>{
-  res.render('index');
-})
-
-//Form page
-app.get('/create',(req,res) =>{
-  res.render('users');
-})
-
-//Create user
-app.post('/user',async(req,res)=>{
-  var likesArr=req.body.likes.split(",");
-  var myObj= {firstname: req.body.firstName, lastname: req.body.lastName, email: req.body.email,
-  password: req.body.password, mobile: req.body.mobile, likes: likesArr};
-    let db = await connectDB();
-    var existEmail = await db.collection("user").findOne({email:myObj['email']});
-    var existMobile = await db.collection("user").findOne({mobile:myObj['mobile']});
-    if(existEmail!=null){
-      res.render('404',{message: "Email already exists"});
-          }
-    else if(existMobile!=null){
-     res.render('404',{message:'Mobile already exists'});
-    }  
-    else if(myObj['mobile'].length!=10){
-       res.render('404',{message:'Mobile digit value should be equal to 10'});
-    }
-    else{
-     const result = await db.collection("user").insertOne(myObj);
-     res.send('<h3>File successfully inserted.</h3>');
-    
-     }
-});
-
-//Display users
-app.get('/users',async(req,res) =>{
-  let db = await connectDB();
-  const data = await db.collection("user").find().toArray();
-  res.render('display',{data});
-});
-
 
 app.listen(3000);
