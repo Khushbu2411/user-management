@@ -12,6 +12,4 @@ app.set('view engine', 'ejs');
 //use static files
 app.use(express.static('public/css'));
 
-app.use(express.urlencoded({ extended: true }));
-
 app.listen(3000);
