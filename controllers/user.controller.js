@@ -1,7 +1,6 @@
 //import connection file
 const connectDB = require("../helpers/connectDB");
 
-
 module.exports.index=(req,res) =>{
     res.render('index');
 };
