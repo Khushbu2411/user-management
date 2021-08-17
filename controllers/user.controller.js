@@ -19,8 +19,9 @@ module.exports.users=async(req,res) =>{
 
 module.exports.usersFilter=async(req,res) =>{
     let db = await connectDB();
-    var value=req.params.value;
-    const projection = {value, "_id":0};
+    var projection={};
+    projection[req.params.value]=1;
+    projection["_id"]=0;
     const data = await db.collection("user").find().project(projection).toArray();
     res.send(data);
 };
