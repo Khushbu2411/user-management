@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Display all users</title> 
         <link rel="stylesheet" href='/style.css'>
+        <!-- <script src='./node_modules/axios/dist/axios.min.js'></script> -->
 
     </head>
     
@@ -12,24 +13,12 @@
         <%- include('./partials/nav.ejs') %>
         <p>Get the user info of given id</p> 
         <div id="site-content">
-            <form onsubmit="myFunction()">
+            <form onsubmit="submitForm(this)">
                 <label for="id">Enter id:</label>
                 <select id="id" name="id">
-                    <option value= 1 >1</option>
-                    <option value= 2>2</option>
-                    <option value= 3>3</option>
-                    <option value= 4>4</option>
-                    <option value= 5>5</option>
-                    <option value= 6>6</option>
-                    <option value= 7>7</option>
-                    <option value= 8>8</option>
-                    <option value= 9>9</option>
-                    <option value= 10>10</option>
-                    <option value= 11>11</option>
-                    <option value= 12>12</option>
-                    <option value= 13>13</option>
-                    <option value= 14>14</option>
-                    <option value= 15>15</option>
+                    <% for(let i=0; i<data.length; i++) { %>
+                    <option value= <%= data[i].id %> ><%= data[i].id %></option>
+                    <% } %>
                 </select><br>
                 <button type="submit" id="submit"> Submit </button>          
             </form>
@@ -42,13 +31,25 @@
         <%- include('./partials/footer.ejs') %>
 
         <script>
-            function myFunction() {
-                let api = 'localhost:3000/user/';
-                const query = document.getElementById("id");
-                let url = api + query;
-                console.log(api);
-                console.log(query);
-                alert("submitted"+query+api);
+            function submitForm(that) {
+                api='localhost:3000/user/';
+                let idValue=that.id.value;
+                let url=api+idValue;
+                console.log(url);
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Typical action to be performed when the document is ready:
+                        document.getElementById("demo").innerHTML = xhttp.responseText;
+                    }
+                };
+                xhttp.open("GET", url, true);
+                xhttp.send();
+                // axios.get(url)
+                //     .then(response => {
+                //         console.log(response.data);
+                //     })
+                //     .catch(error => console.error(error));    
             }
         </script>
           

@@ -11,12 +11,17 @@ module.exports.index = (req, res) => {
     res.render('index');
 };
 
-module.exports.userinfo = (req, res) => {
-    res.render('userinfo');
+module.exports.userinfo = async (req, res) => {
+    const data = await DBOperation.findValidId();
+    res.render('userinfo', { data });
 };
 
 module.exports.create = (req, res) => {
     res.render('users');
+};
+
+module.exports.update = (req, res) => {
+    res.render('update');
 };
 
 module.exports.users = async (req, res) => {
@@ -90,7 +95,7 @@ module.exports.userById = async (req, res) => {
     try {
         const query = { id: parseInt(req.params.id, 10) };
         const data = await DBOperation.find(query);
-        res.send(data);
+        res.render('displayparticular', { data });
     } catch {
         res.status(500)
             .send('Something went wrong on server side. ');
@@ -119,4 +124,8 @@ module.exports.updateById = async (req, res) => {
     } else {
         res.send('Invalid field');
     }
+};
+
+module.exports.delete = (req, res) => {
+    console.log(req.params.id);
 };

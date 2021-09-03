@@ -1,0 +1,35 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Display particular user info</title> 
+        <link rel="stylesheet" href='/style.css'>
+
+    </head>
+    
+    <body>
+        <%- include('./partials/nav.ejs') %>
+
+        <div>
+            <% if(data!=null) { %>
+                <h2>Information of user having ID: <%= data[0].id %></h2>
+                <h4>Firstname: <%= data[0].firstname %></h4>
+                <h4>Lastname: <%= data[0].lastname %></h4>
+                <h4>Email: <%= data[0].email %></h4>
+                <h4>Mobile: <%= data[0].mobile %></h4>
+                <h4>Age: <%= data[0].age %></h4>
+                <h4>Active: <%= data[0].active %></h4>
+                <h4>Address: <%= data[0].address %></h4>
+                <h4>Likes: <%= data[0].likes %></h4>
+            <% }else{ %>
+                <h4>There is no data to display</h4>
+            <% } %>
+            <a href= "/update"> Update </a>
+            <br><br>
+            <a href = "#"> Delete </a>           
+        </div>
+        <br><br><br><br>
+        <%- include('./partials/footer.ejs') %>
+
+    </body>
+</html>

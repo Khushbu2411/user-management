@@ -32,3 +32,10 @@ module.exports.findId = async () => {
         .toArray();
     return id;
 };
+
+module.exports.findValidId = async () => {
+    const db = await connectDB();
+    const id = await db.collection('user').find().project({ id: 1, _id: 0 })
+        .toArray();
+    return id;
+};

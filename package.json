@@ -8,6 +8,7 @@
         "eslint-plugin-import": "^2.24.1"
     },
     "dependencies": {
+        "axios": "^0.21.1",
         "query-params-mongo": "^1.1.2"
     }
 }

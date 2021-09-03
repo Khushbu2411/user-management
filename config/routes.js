@@ -38,7 +38,15 @@ router
     .get(ctrUsers.userById);
 
 router
+    .route('/update')
+    .get(ctrUsers.update);
+
+router
     .route('/user/:id')
     .put(jsonParser, ctrUsers.updateById);
+
+router
+    .route('/user/:id')
+    .delete(jsonParser, ctrUsers.delete);
 
 module.exports = router;

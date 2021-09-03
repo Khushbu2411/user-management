@@ -33,9 +33,7 @@ module.exports.validateInsertion = async (myObj) => {
     } else if ((myObj.mobile).length !== 10) {
         return 'Mobile digit value should be equal to 10';
     } else {
-        console.log(myObj);
         const result = await DBOperation.insert(myObj);
-        console.log(result);
         if (result) {
             return 'Success';
         }
