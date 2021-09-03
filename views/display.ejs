@@ -21,18 +21,24 @@
                         <th>Last Name </th> 
                         <th>Email </th>
                         <th>Mobile </th>
+                        <th>Age</th>
+                        <th>Active</th>
+                        <th>Address</th>
                         <th>Likes </th>
                     </tr>
-                    <% data.forEach(item =>{ %>
+                    <% for(let i=0; i<data.length; i++){ %>
                         <tr>
-                            <td><%= item.id %></td>
-                            <td><%= item.firstname %></td>
-                            <td><%= item.lastname %></td>
-                            <td><%= item.email %></td>
-                            <td><%= item.mobile %></td>
-                            <td><%= item.likes %></td>
+                            <td><%= data[i].id %></td>
+                            <td><%= data[i].firstname %></td>
+                            <td><%= data[i].lastname %></td>
+                            <td><%= data[i].email %></td>
+                            <td><%= data[i].mobile %></td>
+                            <td><%= data[i].age %></td>
+                            <td><%= data[i].active %></td>
+                            <td><%= data[i].address %></td>
+                            <td><%= data[i].likes %></td>
                         </tr>
-                    <% }) %>
+                    <% } %>
                 </table>
             <% }else{ %>
                 <h4>There is no data to display</h4>
@@ -41,9 +47,7 @@
    
 
         <br><br><br><br>
-        <footer>
-            Copyright &copy; User 2021
-        </footer>
+        <%- include('./partials/footer.ejs') %>
 
     </body>
 </html>

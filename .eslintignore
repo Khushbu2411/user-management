@@ -1,0 +1,4 @@
+node_modules/**
+.eslintrc.js
+assets/dist/**
+test/**

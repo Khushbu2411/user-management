@@ -1,12 +1,12 @@
-var users={
+const users = {
     id: 0,
-    age:0,
-    firstname: null, 
+    age: 0,
+    firstname: null,
     lastname: null,
     email: null,
     password: null,
     mobile: null,
-    likes: []
+    likes: [],
 };
 
-module.exports=users;
+module.exports = users;

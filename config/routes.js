@@ -1,52 +1,44 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const express = require('express');
 
-const bodyParser=require('body-parser');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const bodyParser = require('body-parser');
 
-var router=express.Router();
+const router = express.Router();
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-var jsonParser=bodyParser.json({extended : false });
+const jsonParser = bodyParser.json({ extended: false });
 
-var ctrUsers=require('../controllers/user.controller.js');
-
-router
-.route('/')
-.get(ctrUsers.index); 
-
+// eslint-disable-next-line import/extensions
+const ctrUsers = require('../controllers/user.controller.js');
 
 router
-.route('/create')
-.get(ctrUsers.create);
-
-
-router
-.route('/users')
-.get(ctrUsers.users);
-  
+    .route('/')
+    .get(ctrUsers.index);
 
 router
-.route('/user')
-.post(urlencodedParser, ctrUsers.user);  
+    .route('/register')
+    .get(ctrUsers.create);
 
 router
-.route('/userById/:id')
-.get(ctrUsers.userById);
+    .route('/userinfo')
+    .get(ctrUsers.userinfo);
 
 router
-.route('/userByName/:firstname')
-.get(ctrUsers.userByName);
+    .route('/users')
+    .get(ctrUsers.users);
 
 router
-.route('/filterByAge/:age')
-.get(ctrUsers.filterByAge);
+    .route('/user')
+    .post(urlencodedParser, ctrUsers.user);
 
 router
-.route('/filterUsers/:value')
-.get(ctrUsers.usersFilter);
+    .route('/user/:id')
+    .get(ctrUsers.userById);
 
 router
-.route('/updateById/:id')
-.put(jsonParser,ctrUsers.updateById);
+    .route('/user/:id')
+    .put(jsonParser, ctrUsers.updateById);
 
 module.exports = router;

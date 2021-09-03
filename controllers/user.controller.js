@@ -1,80 +1,122 @@
-//import connection file
-const connectDB = require("../helpers/connectDB");
+// import connection file
+const validator = require('../service/validator');
 
-module.exports.index=(req,res) =>{
+const DBOperation = require('../helpers/DBOperation');
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+module.exports.index = (req, res) => {
     res.render('index');
 };
 
+module.exports.userinfo = (req, res) => {
+    res.render('userinfo');
+};
 
-module.exports.create=(req,res) =>{
+module.exports.create = (req, res) => {
     res.render('users');
 };
 
-
-module.exports.users=async(req,res) =>{
-    let db = await connectDB();
-    const data = await db.collection("user").find().toArray();
-    res.render('display',{data});
+module.exports.users = async (req, res) => {
+    const query = {};
+    // eslint-disable-next-line quote-props
+    if (req.query.firstname) query.firstname = capitalizeFirstLetter(req.query.firstname);
+    if (req.query.age) query.age = parseInt(req.query.age, 10);
+    if (req.query.mobile) query.mobile = req.query.mobile;
+    if (req.query.email) query.email = req.query.email;
+    if (req.query.lastname) query.lastname = capitalizeFirstLetter(req.query.lastname);
+    if (req.query.address) query.address = req.query.address;
+    if (req.query.active === 'true') {
+        query.active = true;
+    } else if (req.query.active === 'false') {
+        query.active = false;
+    }
+    try {
+        const data = await DBOperation.find(query);
+        res.render('display', { data });
+    } catch {
+        res.status(500)
+            .send('Something went wrong on server side. ');
+    }
 };
 
-module.exports.usersFilter=async(req,res) =>{
-    let db = await connectDB();
-    var projection={};
-    projection[req.params.value]=1;
-    projection["_id"]=0;
-    const data = await db.collection("user").find().project(projection).toArray();
-    res.send(data);
+module.exports.user = async (req, res) => {
+    try {
+        const {
+            firstName: firstname,
+            lastName: lastname,
+            email,
+            password,
+            age,
+            mobile,
+            address,
+            active,
+            likes = '',
+        } = req.body;
+        const likesArr = likes.split(',');
+        let setActive = false;
+        if (active === 'true' || active === 'True') {
+            setActive = true;
+        }
+        const id = await DBOperation.findId();
+        // eslint-disable-next-line prefer-const
+        let myObj = {
+            id: id[0].id + 1,
+            firstname,
+            lastname,
+            email,
+            password,
+            age,
+            mobile,
+            address,
+            active: setActive,
+            likes: likesArr,
+        };
+        const data = await validator.validateInsertion(myObj);
+        if (data === 'Success') {
+            res.send('Successfully inserted');
+        } else {
+            res.render('404', { message: data });
+        }
+    } catch {
+        res.status(500)
+            .send('Something went wrong on server side. ');
+    }
 };
 
+module.exports.userById = async (req, res) => {
+    try {
+        const query = { id: parseInt(req.params.id, 10) };
+        const data = await DBOperation.find(query);
+        res.send(data);
+    } catch {
+        res.status(500)
+            .send('Something went wrong on server side. ');
+    }
+};
 
-module.exports.user= async(req,res) => {
-    var likesArr=req.body.likes.split(",");
-    var myObj= {firstname: req.body.firstName, lastname: req.body.lastName, email: req.body.email,
-    password: req.body.password, age:req.body.age, mobile: req.body.mobile, likes: likesArr};
-      let db = await connectDB();
-      var existEmail = await db.collection("user").findOne({email:myObj['email']});
-      var existMobile = await db.collection("user").findOne({mobile:myObj['mobile']});
-      if(existEmail!=null){
-        res.render('404',{message: "Email already exists"});
+module.exports.updateById = async (req, res) => {
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+        const err = 'No data provided to update';
+        res.status(400)
+            .send(err);
+    }
+    if (validator.verifyRequest(req.body)) {
+        try {
+            const data = await DBOperation.update(req.params.id, req.body);
+            if (data === true) {
+                res.send('Successfully updated');
+            } else {
+                res.status(400)
+                    .send('Couldn\'t update. Id don\'t exist ');
             }
-      else if(existMobile!=null){
-       res.render('404',{message:'Mobile already exists'});
-      }  
-      else if(myObj['password'].length<8){
-          res.render('404',{message:'Password length is too small. It should be minimum 8 character long'});
-      }
-      else if(myObj['mobile'].length!=10){
-         res.render('404',{message:'Mobile digit value should be equal to 10'});
-      }
-      else{
-       const result = await db.collection("user").insertOne(myObj);
-       res.send('<h3>File successfully inserted.</h3>');
-       }
+        } catch {
+            res.status(500)
+                .send('Something went wrong on server side. ');
+        }
+    } else {
+        res.send('Invalid field');
+    }
 };
-
-module.exports.userById= async(req,res)=>{
-    let db = await connectDB();
-    const data = await db.collection("user").find({'id':req.params.id}).toArray();
-    res.send(data);
-};
-
-module.exports.userByName = async(req,res)=>{
-    let db = await connectDB();
-    const data = await db.collection("user").find({'firstname':req.params.firstname}).toArray();
-    res.send(data);
-};
-
-module.exports.filterByAge = async(req,res) => {
-  let db= await connectDB();
-  var age=parseInt(req.params.age);
-  const projection ={"firstname":1,"lastname":1,"_id":0};
-  var data= await db.collection("user").find({'age':age}).project(projection).sort({'firstname':1}).toArray();
-  res.send(data);
-};
-
-module.exports.updateById = async(req,res) =>{
-    let db= await connectDB();
-    const result= await db.collection("user").updateOne({'id':req.params.id},{'$set':req.body});
-    res.send("Successfully updated");
-};
-
