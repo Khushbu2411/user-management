@@ -21,7 +21,7 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.update = (req, res) => {
-    res.render('update');
+    res.render('update', { id: req.query.id });
 };
 
 module.exports.users = async (req, res) => {
@@ -108,24 +108,33 @@ module.exports.updateById = async (req, res) => {
         res.status(400)
             .send(err);
     }
-    if (validator.verifyRequest(req.body)) {
-        try {
-            const data = await DBOperation.update(req.params.id, req.body);
-            if (data === true) {
-                res.send('Successfully updated');
-            } else {
-                res.status(400)
-                    .send('Couldn\'t update. Id don\'t exist ');
-            }
-        } catch {
-            res.status(500)
-                .send('Something went wrong on server side. ');
+    const bodyObj = (validator.verifyRequest(req.body));
+    try {
+        const data = await DBOperation.update(req.params.id, bodyObj);
+        if (data === true) {
+            // eslint-disable-next-line prefer-template
+            const url = '/user/' + req.params.id;
+            res.redirect(url);
+        } else {
+            res.status(400)
+                .send('Couldn\'t update. Id don\'t exist ');
         }
-    } else {
-        res.send('Invalid field');
+    } catch {
+        res.status(500)
+            .send('Something went wrong on server side. ');
     }
 };
 
-module.exports.delete = (req, res) => {
-    console.log(req.params.id);
+module.exports.delete = async (req, res) => {
+    try {
+        const data = await DBOperation.delete(parseInt(req.params.id, 10));
+        if (data.deletedCount === 1) {
+            res.send('Successfully deleted');
+        } else {
+            res.send('Can\'t delete. Id doesn\'t exist.');
+        }
+    } catch {
+        res.status(500)
+            .send('Something went wrong on server side. ');
+    }
 };

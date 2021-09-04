@@ -13,8 +13,19 @@ const jsonParser = bodyParser.json({ extended: false });
 // eslint-disable-next-line import/extensions
 const ctrUsers = require('../controllers/user.controller.js');
 
+// eslint-disable-next-line import/extensions
+const adminLogin = require('../controllers/login.controller.js');
+
 router
     .route('/')
+    .get(adminLogin.login);
+
+router
+    .route('/verifyLogin')
+    .post(urlencodedParser, adminLogin.verifyLogin);
+
+router
+    .route('/index')
     .get(ctrUsers.index);
 
 router
@@ -43,7 +54,7 @@ router
 
 router
     .route('/user/:id')
-    .put(jsonParser, ctrUsers.updateById);
+    .post(urlencodedParser, ctrUsers.updateById);
 
 router
     .route('/user/:id')

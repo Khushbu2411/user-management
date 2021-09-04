@@ -1,22 +1,33 @@
 const DBOperation = require('../helpers/DBOperation');
 
 module.exports.verifyRequest = (body) => {
-    const validKeys = {
-        firstname: true,
-        lastname: true,
-        email: true,
-        age: true,
-        mobile: true,
-        active: true,
-        address: true,
-    };
+    // const validKeys = {
+    //     firstname: true,
+    //     lastname: true,
+    //     email: true,
+    //     age: true,
+    //     mobile: true,
+    //     active: true,
+    //     address: true,
+    // };
+    // // eslint-disable-next-line no-plusplus
+    // for (let i = 0; i < Object.keys(body).length; i++) {
+    //     if (!validKeys[Object.keys(body)[i]]) {
+    //         return false;
+    //     }
+    // }
+    console.log(body);
+    const bodyObj = { };
+    const keys = Object.keys(body);
+    console.log(keys);
     // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < Object.keys(body).length; i++) {
-        if (!validKeys[Object.keys(body)[i]]) {
-            return false;
+    for (let i = 0; i < keys.length; i++) {
+        if (body[keys[i]]) {
+            bodyObj[keys[i]] = body[keys[i]];
         }
     }
-    return true;
+    console.log(bodyObj);
+    return bodyObj;
 };
 
 // eslint-disable-next-line consistent-return

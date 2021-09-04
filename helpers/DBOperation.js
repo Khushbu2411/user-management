@@ -39,3 +39,10 @@ module.exports.findValidId = async () => {
         .toArray();
     return id;
 };
+
+module.exports.delete = async (id) => {
+    const db = await connectDB();
+    // eslint-disable-next-line quote-props
+    const data = await db.collection('user').deleteOne({ 'id': id });
+    return data;
+};

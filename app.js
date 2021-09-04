@@ -1,14 +1,21 @@
+/* eslint-disable no-path-concat */
+// eslint-disable-next-line import/no-extraneous-dependencies
 const express = require('express');
-const app= express();
-//import router file
-var routes=require('./config/routes'); 
 
-app.use("/",routes);
+const app = express();
 
-//register view enignes
+// import router file
+const routes = require('./config/routes');
+
+app.use('/', routes);
+
+// register view enignes
 app.set('view engine', 'ejs');
 
-//use static files
+// Use static files
 app.use(express.static('public/css'));
+
+// eslint-disable-next-line prefer-template
+app.use(express.static(__dirname + '/public'));
 
 app.listen(3000);
