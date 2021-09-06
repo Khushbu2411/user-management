@@ -39,7 +39,6 @@
                 api='http://localhost:3000/user/';
                 let idValue=document.getElementById("id").value;
                 let url=api+idValue;
-                console.log(url);
                 axios.get(url)
                     .then(response => {
                         console.log(response.data);
