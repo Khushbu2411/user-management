@@ -29,6 +29,10 @@ nav p, nav a{
     font-weight: 300;
 }
 
+header h2{
+    text-align: center;
+}
+
 footer{
     color: #777;
     text-align: center;

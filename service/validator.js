@@ -16,7 +16,6 @@ module.exports.verifyRequest = (body) => {
     //         return false;
     //     }
     // }
-    console.log(body);
     const bodyObj = { };
     const keys = Object.keys(body);
     console.log(keys);
@@ -26,7 +25,6 @@ module.exports.verifyRequest = (body) => {
             bodyObj[keys[i]] = body[keys[i]];
         }
     }
-    console.log(bodyObj);
     return bodyObj;
 };
 
