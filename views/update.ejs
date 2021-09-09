@@ -5,46 +5,99 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Register user</title> 
         <link rel="stylesheet" href='/style.css'>
+        <link rel="stylesheet" href="https://designsystem.sendinblue.com/component/clickable/b050553de3ec3c9d98a4.css"> 
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     </head>
 <body>     
     <%- include('./partials/nav.ejs') %>
     <header>
-        <h2><i><u>USER MANAGEMENT PORTAL</u></i></h2>
+        <h2><u>User Management Portal</u></h2>
     </header>
-   
-        <div class="container">
-            <h2><u>Update info of user with id <%= id %></u></h2>
-            <% let urlUpdate='/user/'+id %>
-            <form action= " <%= urlUpdate %> ", method="POST">
-                <label for="firstName">First Name:</label>
-                <input type ="text" id="firstname"  name="firstname">
-                <br><br>
-                <label for="lastName">Last Name:</label>
-                <input type ="text" id="lastname" name="lastname">
-                <br><br>
-                <label for="email">Email:</label>
-                <input type ="text" id="email" name="email" >
-                <br><br>
-                <label for="address">Address:</label>
-                <input type ="text" id="address" name="address" >
-                <br><br>
-                <label for="active">Active:</label>
-                <input type ="text" id="active" name="active" >
-                <br><br>
-                <label for="mobile">Mobile:</label>
-                <input type ="text" id="mobile" name="mobile" >
-                <br><br>
-                <label for="age">Age:</label>
-                <input type ="number" id="age" name="age" >
-                <br>
-                <button type="submit">Submit</button>  
-                
-            </form>
-        </div>
-        <br>
-        <%- include('./partials/footer.ejs') %>
+    <br><br>
+    <div class="two">
+        <h3 class="update"><u>Update information of user with id <%= id %></u></h3>
+        <form class="formMaintain">
+            <div class="row">
+                <div class="col">
+                    <label for="firstName" class="form-label">First Name:</label>
+                    <input type ="text" id="firstname" name="firstname" class="form-control" aria-describedby="firstnameHelp">
+                    <div id="firstnameHelp" class="form-text">First name should contain only letters.</div>
+                </div>
+                <div class="col">
+                    <label for="lastName" class="form-label">Last Name:</label>
+                    <input type ="text" id="lastname" name="lastname" class="form-control" aria-describedby="lastnameHelp">
+                    <div id="lastnameHelp" class="form-text">Last name should contain only letters.</div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="text" class="form-control" id="email" name="email" >
+                </div>
+                <div class="col">
+                    <label for="age" class="form-label">Age:</label>
+                    <input type="number" class="form-control" id="age" name="age" >
+                </div>
+                <div class="col">
+                    <label for="active" class="form-label">Active:</label>
+                    <input type="text" class="form-control" id="active" name="active" >
+                </div>
+            </div>   
+            <br>
+            <div class="row">
+                <div class="col">
+                    <label for="address" class="form-label">Address:</label>
+                    <input type ="text" id="address" name="address" class="form-control" >
+                </div>
+                <div class="col">
+                    <label for="mobile" class="form-label">Mobile:</label>
+                    <input type="text" class="form-control" id="mobile" name="mobile" >
+                </div>
+            </div> 
+            <br>
+            <button type="submit" id="updateButton" class="clickable_button">Submit</button>
+            <br><br>
+        </form>
+    </div>
+    <br><br><br>
+    <%- include('./partials/footer.ejs') %>
 
+    <script>
+        document.getElementById('updateButton').addEventListener("click", async function (event) {
+            event.preventDefault();
+            let api='http://localhost:3000/user/'+ '<%= id %>';
+            const data = document.getElementById.bind(document);
+            const value= {
+                age: data('age').value, 
+                firstname: data('firstname').value, 
+                lastname: data('lastname').value, 
+                email:data('email').value,
+                mobile:data('mobile').value,
+                active: data('active').value,
+                address: data('address').value, 
+            }
+            console.log(value);
+        
+            await axios.put(api, value, {
+                headers: {
+                    'Content-Type': 'application/json' 
+                                          
+                }})
+                .then(response => {
+                    console.log(response.data);
+                    if(response.data==='updated'){
+                        location.href='http://localhost:3000/user/' + '<%=id %>';
 
-    </body>
+                    }
+                })
+            .catch(error => console.error(error));    
+        });
+    </script>  
+</body>
 </html>
     

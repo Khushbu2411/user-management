@@ -1,20 +1,72 @@
-        <div>
+<head>
+    <link rel="stylesheet" href='/style.css'>
+    <link rel="stylesheet" href="https://designsystem.sendinblue.com/component/clickable/b050553de3ec3c9d98a4.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>  
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <header>
+        <h2><u>USER MANAGEMENT PORTAL</u></h2>
+        <br>
+    </header>
+
+<div class="displayParticular">
+    <br>
             <% if(data!=null) { %>
-                <h2>Information of user having ID: <%= data[0].id %></h2>
-                <h4>Firstname: <%= data[0].firstname %></h4>
-                <h4>Lastname: <%= data[0].lastname %></h4>
-                <h4>Email: <%= data[0].email %></h4>
-                <h4>Mobile: <%= data[0].mobile %></h4>
-                <h4>Age: <%= data[0].age %></h4>
-                <h4>Active: <%= data[0].active %></h4>
-                <h4>Address: <%= data[0].address %></h4>
-                <h4>Likes: <%= data[0].likes %></h4>
+                <h3>Information of user having ID: <%= data[0].id %></h3>
+                <br>
+                <ul class="list-group">
+                    <li class="list-group-item"><span class="key">Firstname: </span><%= data[0].firstname %></li>
+                    <li class="list-group-item"><span class="key">Lastname: </span><%= data[0].lastname %></li>
+                    <li class="list-group-item"><span class="key">Email: </span><%= data[0].email %></li>
+                    <li class="list-group-item"><span class="key">Mobile: </span><%= data[0].mobile %></li>
+                    <li class="list-group-item"><span class="key">Age: </span><%= data[0].age %></li>
+                    <li class="list-group-item"><span class="key">Active: </span><%= data[0].active %></li>
+                    <li class="list-group-item"><span class="key">Address: </span><%= data[0].address %></li>
+                    <li class="list-group-item"><span class="key">Likes: </span> <%= data[0].likes %></li>
+
+                </ul>
+                
             <% }else{ %>
                 <h4>There is no data to display</h4>
             <% } %>
+            <br>
             <% let urlUpdate= '/update?id=' + data[0].id %>
-            <a href= "<%= urlUpdate %>" > Update </a>
-            <br><br>
-            <a href = #>Delete </a>    
+            <!-- <a href= "<%= urlUpdate %>" > Update </a> -->
+            <span class="button1">
+                <button type="submit" id="myButton" class="clickable_button">Update</button>
+            <script>
+                document.getElementById('myButton').onclick = function () {
+                    // eslint-disable-next-line no-restricted-globals
+                    const url = '<%=  urlUpdate %>';
+                    location.href = url;
+               };
+            </script>
+            </span>
+            <span class="button2">
+                <button type="submit" id="deleteButton" class="clickable_button clickable_destructive">Delete</button>
+                <script>
+                document.getElementById('deleteButton').addEventListener("click", function (event) {
+                    event.preventDefault();
+                    let api='http://localhost:3000/user/'+ '<%= data[0].id %>';
+                    axios.delete(api)
+                        .then(response => {
+                            console.log(response.data);
+                            if(response.data === 'Successfully deleted'){
+                                location.href = 'http://localhost:3000/delete/?id=' + '<%=data[0].id %>';
+                            }
+                        })
+                    .catch(error => console.error(error));    
+                });
+            </script>  
+           </span> 
             <hr>       
-        </div>
+</div>    
+<br><br>
+<%- include('./partials/footer.ejs') %>
+
+</body>        

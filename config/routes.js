@@ -54,10 +54,14 @@ router
 
 router
     .route('/user/:id')
-    .post(urlencodedParser, ctrUsers.updateById);
+    .put(jsonParser, ctrUsers.updateById);
 
 router
     .route('/user/:id')
     .delete(jsonParser, ctrUsers.delete);
+
+router
+    .route('/delete')
+    .get(ctrUsers.deleteEjs);
 
 module.exports = router;

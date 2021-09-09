@@ -18,4 +18,6 @@ app.use(express.static('public/css'));
 // eslint-disable-next-line prefer-template
 app.use(express.static(__dirname + '/public'));
 
+app.use(express.static('public/js'));
+
 app.listen(3000);

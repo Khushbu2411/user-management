@@ -11,6 +11,10 @@ module.exports.index = (req, res) => {
     res.render('index');
 };
 
+module.exports.deleteEjs = (req, res) => {
+    res.render('delete', { id: req.query.id });
+};
+
 module.exports.userinfo = async (req, res) => {
     const data = await DBOperation.findValidId();
     res.render('userinfo', { data });
@@ -27,12 +31,22 @@ module.exports.update = (req, res) => {
 module.exports.users = async (req, res) => {
     const query = {};
     // eslint-disable-next-line quote-props
-    if (req.query.firstname) query.firstname = capitalizeFirstLetter(req.query.firstname);
+    // constructor with string pattern as first argument
+    if (req.query.firstname) {
+        const firstname = new RegExp(req.query.firstname, 'i');
+        query.firstname = { $regex: firstname };
+    }
     if (req.query.age) query.age = parseInt(req.query.age, 10);
     if (req.query.mobile) query.mobile = req.query.mobile;
     if (req.query.email) query.email = req.query.email;
-    if (req.query.lastname) query.lastname = capitalizeFirstLetter(req.query.lastname);
-    if (req.query.address) query.address = req.query.address;
+    if (req.query.lastname) {
+        const lastname = new RegExp(req.query.lastname, 'i');
+        query.lastname = { $regex: lastname };
+    }
+    if (req.query.address) {
+        const address = new RegExp(req.query.address, 'i');
+        query.address = { $regex: address };
+    }
     if (req.query.active === 'true') {
         query.active = true;
     } else if (req.query.active === 'false') {
@@ -81,7 +95,7 @@ module.exports.user = async (req, res) => {
         };
         const data = await validator.validateInsertion(myObj);
         if (data === 'Success') {
-            res.send('Successfully inserted');
+            res.render('insert');
         } else {
             res.render('404', { message: data });
         }
@@ -102,10 +116,11 @@ module.exports.userById = async (req, res) => {
     }
 };
 
+// eslint-disable-next-line consistent-return
 module.exports.updateById = async (req, res) => {
     if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
         const err = 'No data provided to update';
-        res.status(400)
+        return res.status(400)
             .send(err);
     }
     const bodyObj = (validator.verifyRequest(req.body));
@@ -114,12 +129,13 @@ module.exports.updateById = async (req, res) => {
         if (data === true) {
             // eslint-disable-next-line prefer-template
             const url = '/user/' + req.params.id;
-            res.redirect(url);
+            res.send('updated');
         } else {
             res.status(400)
                 .send('Couldn\'t update. Id don\'t exist ');
         }
-    } catch {
+    } catch (err) {
+        console.log(err);
         res.status(500)
             .send('Something went wrong on server side. ');
     }

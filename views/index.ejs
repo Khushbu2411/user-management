@@ -5,6 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Homepage</title> 
         <link rel="stylesheet" href='/style.css'>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     </head>
     
     <body>     
@@ -12,16 +16,20 @@
         <%- include('./partials/nav.ejs') %>
         <div class="header">
             <br><br>
-            <h1>USER MANAGEMENT PORTAL</h1>
-            <img src='/images/userpicture.jpg' alt="user-management" width="300" height="170">
-            <h2>Welcome Admin</h2>
-            <h4>Manage User Information </h4> 
-            <h4>You can add, update, read and delete the user information</h4>
+            <h1>A warm welcome!</h1>
+            <h1>User Management Portal</h1><br>
+            <img src='/images/1497.png' alt="user-management" width="150" height="150">
+            <div class="body">
+                <h4>Manage User Information </h4> 
+                <h4><span class="textHighlight">C</span>reate, <span class="textHighlight">R</span>ead 
+                    <span class="textHighlight">U</span>pdate and <span class="textHighlight">D</span>elete the user information</h4>
+            </div>
             <br><br>
 
             <br>
-            <%- include('./partials/footer.ejs') %>
         </div>
+
+        <%- include('./partials/footer.ejs') %>
 
     </body>
 </html>

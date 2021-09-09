@@ -4,17 +4,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Display all users</title> 
         <link rel="stylesheet" href='/style.css'>
+        <link rel="stylesheet" href="https://designsystem.sendinblue.com/component/clickable/b050553de3ec3c9d98a4.css">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     </head>
     
     <body>
         <%- include('./partials/nav.ejs') %>
         <header>
-            <h2><i><u>USER MANAGEMENT PORTAL</u></i></h2>
+            <h2><u>USER MANAGEMENT PORTAL</u></h2>
+            <br>
         </header>
 
-        <div>
-            <h3>Filter User</h3>
+        <div class="filterForm">
+            <h3><u>Filter User</u></h3>
             <form>
                 <label for="firstName">First Name:</label>
                 <input type ="text" id="firstname"  name="firstname" >
@@ -30,29 +35,32 @@
                 <input type ="text" id="mobile" name="mobile" >
                 <label for="age">Age:</label>
                 <input type ="number" id="age" name="age" >
+                <br><br>
+                <button type="submit" class="clickable_button">Submit</button>  
                 <br>
-                <button type="submit">Submit</button>  
             </form>
-            <h2>All Users</h2>
+        </div>    
+        <div class="users">
+            <h2><u>All Users</u></h2>
             <hr>
-            <% if(data!=null) { %>
-                <table>
-                    <tr>
-                        <th>ID </th>
-                        <th>First Name </th>
-                        <th>Last Name </th> 
-                        </tr>
-                    <% for(let i=0; i<data.length; i++){ %>
+                <% if(data!==[]) { %>
+                    <table class="table table-striped table-hover">
                         <tr>
-                            <td><%= data[i].id %></td>
-                            <% let url = '/user/'+ data[i].id %>
-                            <td><a href= "<%= url %> "><%= data[i].firstname %></a></td>
-                            <td><%= data[i].lastname %></td>
-                            </tr>
-                    <% } %>
-                </table>
-            <% }else{ %>
-                <h4>There is no data to display</h4>
+                            <th scope="col"><u>ID</u> </th>
+                            <th scope="col"><u>First Name</u> </th>
+                            <th scope="col"><u>Last Name</u> </th> 
+                        </tr>
+                        <% for(let i=0; i<data.length; i++){ %>
+                            <tr>
+                                <th scope="row"><%= data[i].id %></th>
+                                <% let url = '/user/'+ data[i].id %>
+                                <td><a href= "<%= url %> "><%= data[i].firstname %></a></td>
+                                <td><%= data[i].lastname %></td>
+                        </tr>
+                        <% } %>
+                    </table>
+                <% }else{ %>
+                    <h4>There is no data to display</h4>
                 <% } %>
         </div>
    

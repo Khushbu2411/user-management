@@ -5,51 +5,75 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Register user</title> 
         <link rel="stylesheet" href='/style.css'>
+        <link rel="stylesheet" href="https://designsystem.sendinblue.com/component/clickable/b050553de3ec3c9d98a4.css">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
     </head>
     <body>      
         <%- include('./partials/nav.ejs') %>
         <header>
-            <h2><i><u>USER MANAGEMENT PORTAL</u></i></h2>
+            <h2><u>User Management Portal</u></h2>
         </header>
-        <div class="container">
-            <h2><u>Register a user</u></h2>
-            <form action="/user" method="POST">
-                <label for="firstName">First Name:</label>
-                <input type ="text" id="firstName"  name="firstName" required>
-                <br><br>
-                <label for="lastName">Last Name:</label>
-                <input type ="text" id="lastName" name="lastName" required>
-                <br><br>
-                <label for="email">Email:</label>
-                <input type ="text" id="email" name="email" required>
-                <br><br>
-                <label for="password">Password:</label>
-                <input type ="text" id="password" name="password" required>
-                <br><br>
-                <label for="address">Address:</label>
-                <input type ="text" id="address" name="address" >
-                <br><br>
-                <label for="active">Active:</label>
-                <input type ="text" id="active" name="active" required>
-                <br><br>
-                <label for="mobile">Mobile:</label>
-                <input type ="text" id="mobile" name="mobile" required>
-                <br><br>
-                <label for="age">Age:</label>
-                <input type ="number" id="age" name="age" required>
-
-                <br><br>
-                <label for="likes">Likes:</label>
-                <textarea type ="text" id="likes" name="likes"></textarea>
-                <p><i>--Likes separated by commas</i></p>
-                <button type="submit">Submit</button>  
-                
+        <div class="one">
+            <h2 class='register'><u>Register a user</u></h2>
+            <form action="/user" method="POST" class="formMaintain">
+                <div class="row">
+                    <div class="col">              
+                        <label for="firstName" class="form-label">First Name: <span class='character'>*</span></label>
+                        <input type ="text" id="firstName" name="firstName" class="form-control" aria-describedby="firstnameHelp" required>
+                        <div id="firstnameHelp" class="form-text">First name should contain only letters.</div>
+                    </div>
+                <div class="col">
+                    <label for="lastName" class="form-label">Last Name: <span class='character'>*</span></label>
+                    <input type ="text" id="lastName" name="lastName" class="form-control" aria-describedby="lastnameHelp" required>
+                    <div id="lastnameHelp" class="form-text">Last name should contain only letters.</div>
+                </div>
+                <div class="col">
+                    <label for="email" class="form-label">Email: <span class='character'>*</span></label>
+                    <input type="text" class="form-control" id="email" name="email" required>                
+                </div>
+            </div>   
+            <br> 
+            <div class="row">
+                <div class="col">
+                    <label for="password" class="form-label">Password: <span class='character'>*</span></label>
+                    <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp" required>  
+                    <div id="passwordHelp" class="form-text">Password must be greater than 8 characters.</div>
+                </div>
+                <div class="col">
+                    <label for="address" class="form-label">Address: <span class='character'>*</span></label>
+                    <input type ="text" id="address" name="address" class="form-control" required>
+                </div>
+                <div class="col">
+                    <label for="mobile" class="form-label">Mobile: <span class='character'>*</span></label>
+                    <input type="text" class="form-control" id="mobile" name="mobile" aria-describedby="mobileHelp" required>
+                    <div id="passwordHelp" class="form-text">Mobile digit length must be 10.</div>
+                </div>
+            </div>   
+            <div class="row">
+                <div class="col">
+                    <label for="age" class="form-label">Age:</label>
+                    <input type="number" class="form-control" id="age" name="age">
+                  </div>
+                <div class="col">
+                  <label for="active" class="form-label">Active: <span class='character'>*</span></label>
+                  <input type="text" class="form-control" id="active" name="active" required >
+                </div>
+                <div class="col">                
+                    <label for="likes" class="form-label">Likes:</label>
+                    <textarea type ="text" class="form-control" id="likes" name="likes" aria-describedby="likesHelp"></textarea>
+                    <div id="likesHelp" class="form-text">--Likes separated by commas.</div>
+                </div>    
+            </div>  
+                <button type="submit" class="clickable_button">Submit</button>    
             </form>
+            <br>
         </div>
         <br>
         <%- include('./partials/footer.ejs') %>
-
-
     </body>
 </html>
     

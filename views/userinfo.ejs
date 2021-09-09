@@ -5,34 +5,39 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Display all users</title> 
         <link rel="stylesheet" href='/style.css'>
+        <link rel="stylesheet" href="https://designsystem.sendinblue.com/component/clickable/b050553de3ec3c9d98a4.css">
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     
     <body>
         <%- include('./partials/nav.ejs') %>
         <header>
-            <h2><i><u>USER MANAGEMENT PORTAL</u></i></h2>
+            <h2><u>User Management Portal</u></h2>
         </header>
         <br>
         <div id="site-content">
             <br>
             <p>Get the user info of given id</p> 
             <form id="form-id">
-                <label for="id">Enter id:</label>
+                <label for="id"><b>Enter id:</b></label>
                 <select id="id" name="id">
                     <% for(let i=0; i<data.length; i++) { %>
                         <option value= <%= data[i].id %> ><%= data[i].id %></option>
                     <% } %>
-                </select><br>
-                <button type="submit" id="submit"> Submit </button>  
+                </select><br><br>
+                <button type="submit" id="submit" class="clickable_button"> Submit </button>  
             </form>
         </div>    
-       <div id = "data-display"></div>
+       <!-- <div id = "data-display"></div> -->
         <br><br>
         <div id="anchor">
             <a  href="/users">Display All Users</a>
         </div>
         <br><br>
+        
         <%- include('./partials/footer.ejs') %>
 
         <script>
@@ -42,14 +47,15 @@
                 api='http://localhost:3000/user/';
                 let idValue=document.getElementById("id").value;
                 let url=api+idValue;
-                axios.get(url)
-                    .then(response => {
-                        console.log(response.data);
-                        document.getElementById('data-display').innerHTML=response.data;
-                    })
-                    .catch(error => console.error(error));    
+                location.href=url;
+            //     axios.get(url)
+            //         .then(response => {
+            //             console.log(response.data);
+            //             document.getElementById('data-display').innerHTML=response.data;
+            //         })
+            //         .catch(error => console.error(error));    
             });
         </script>
           
     </body>
-</html>        
+</html>       
