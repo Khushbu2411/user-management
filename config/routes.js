@@ -16,6 +16,9 @@ const ctrUsers = require('../controllers/user.controller.js');
 // eslint-disable-next-line import/extensions
 const adminLogin = require('../controllers/login.controller.js');
 
+// eslint-disable-next-line import/extensions
+const auth = require('../service/auth.js');
+
 router
     .route('/')
     .get(adminLogin.login);
@@ -26,42 +29,42 @@ router
 
 router
     .route('/index')
-    .get(ctrUsers.index);
+    .get(auth.verifyUserToken, ctrUsers.index);
 
 router
     .route('/register')
-    .get(ctrUsers.create);
+    .get(auth.verifyUserToken, ctrUsers.create);
 
 router
     .route('/userinfo')
-    .get(ctrUsers.userinfo);
+    .get(auth.verifyUserToken, ctrUsers.userinfo);
 
 router
     .route('/users')
-    .get(ctrUsers.users);
+    .get(auth.verifyUserToken, ctrUsers.users);
 
 router
     .route('/user')
-    .post(urlencodedParser, ctrUsers.user);
+    .post(urlencodedParser, auth.verifyUserToken, ctrUsers.user);
 
 router
     .route('/user/:id')
-    .get(ctrUsers.userById);
+    .get(auth.verifyUserToken, ctrUsers.userById);
 
 router
     .route('/update')
-    .get(ctrUsers.update);
+    .get(auth.verifyUserToken, ctrUsers.update);
 
 router
     .route('/user/:id')
-    .put(jsonParser, ctrUsers.updateById);
+    .put(jsonParser, auth.verifyUserToken, ctrUsers.updateById);
 
 router
     .route('/user/:id')
-    .delete(jsonParser, ctrUsers.delete);
+    .delete(jsonParser, auth.verifyUserToken, ctrUsers.delete);
 
 router
     .route('/delete')
-    .get(ctrUsers.deleteEjs);
+    .get(auth.verifyUserToken, ctrUsers.deleteEjs);
 
 module.exports = router;

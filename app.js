@@ -4,8 +4,14 @@ const express = require('express');
 
 const app = express();
 
+const cookieParser = require('cookie-parser');
+
 // import router file
 const routes = require('./config/routes');
+
+app.use(express.json());
+
+app.use(cookieParser());
 
 app.use('/', routes);
 
