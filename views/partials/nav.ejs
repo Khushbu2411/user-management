@@ -1,10 +1,35 @@
-<nav>
-    <div class="site-title">
-        <a href="/"><h1>Home</h1></a>
-        <p>MY WEBSITE-  USERS</p>
+<div id="topheader">
+  <nav class="navbar navbar-expand-lg navbar-light bg-color">
+    <a class="navbar-brand" href="#">USER MANAGEMENT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active-class">
+          <a class="nav-link " href="/index"><u>Home</u></a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link " href="/userinfo"><u>User Details</u></a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link " href="/register"><u>Register</u></a>
+        </li>
+        </ul>
+        <ul class="navbar-nav  mt-2 mt-lg-0 justify-content-end">
+        <li class="nav-item ">
+          <a class="nav-link " href="/logout"><u>Log out</u></a>
+        </li>
+      </ul>
     </div>
-    <ul>
-        <li><a href="/userinfo">User Info</a></li>
-        <li><a href="/register">Register</a></li>
-    </ul>
 </nav>
+</div>
+<script>
+  $( '#topheader .navbar-nav a' ).on('click', 
+             function () {
+     $( '#topheader .navbar-nav' ).find( 'li.active-class' )
+     .removeClass( 'active-class' );
+     $( this ).parent( 'li' ).addClass( 'active-class' );
+ });
+ </script>

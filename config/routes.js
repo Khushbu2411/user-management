@@ -13,32 +13,70 @@ const jsonParser = bodyParser.json({ extended: false });
 // eslint-disable-next-line import/extensions
 const ctrUsers = require('../controllers/user.controller.js');
 
+// eslint-disable-next-line import/extensions
+const adminLogin = require('../controllers/login.controller.js');
+
+// eslint-disable-next-line import/extensions
+const auth = require('../service/auth.js');
+
+router
+    .route('/signup')
+    .get(ctrUsers.signupPage);
+
+router
+    .route('/logout')
+    .get(auth.verifyUserToken, adminLogin.logout);
+
 router
     .route('/')
-    .get(ctrUsers.index);
+    .get(adminLogin.login);
+
+router
+    .route('/verifyLogin')
+    .post(urlencodedParser, adminLogin.verifyLogin);
+
+router
+    .route('/index')
+    .get(auth.verifyUserToken, ctrUsers.indexPage);
 
 router
     .route('/register')
-    .get(ctrUsers.create);
+    .get(auth.verifyUserToken, ctrUsers.registerPage);
 
 router
     .route('/userinfo')
-    .get(ctrUsers.userinfo);
+    .get(auth.verifyUserToken, ctrUsers.userinfo);
 
 router
     .route('/users')
-    .get(ctrUsers.users);
+    .get(auth.verifyUserToken, ctrUsers.listAllUsers);
 
 router
     .route('/user')
-    .post(urlencodedParser, ctrUsers.user);
+    .post(urlencodedParser, auth.verifyUserToken, ctrUsers.insertUser);
+
+router
+    .route('/userRegister')
+    .post(urlencodedParser, ctrUsers.insertUser);
 
 router
     .route('/user/:id')
-    .get(ctrUsers.userById);
+    .get(auth.verifyUserToken, ctrUsers.getUserById);
+
+router
+    .route('/update')
+    .get(auth.verifyUserToken, ctrUsers.updatePage);
 
 router
     .route('/user/:id')
-    .put(jsonParser, ctrUsers.updateById);
+    .put(jsonParser, auth.verifyUserToken, ctrUsers.updateById);
+
+router
+    .route('/user/:id')
+    .delete(jsonParser, auth.verifyUserToken, ctrUsers.delete);
+
+router
+    .route('/delete')
+    .get(auth.verifyUserToken, ctrUsers.deletePage);
 
 module.exports = router;

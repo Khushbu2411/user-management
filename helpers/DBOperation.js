@@ -9,6 +9,7 @@ module.exports.update = async (id, body) => {
 
 module.exports.find = async (query) => {
     const db = await connectDB();
+    // eslint-disable-next-line quote-props
     const data = await db.collection('user').find(query).toArray();
     return data;
 };
@@ -31,4 +32,18 @@ module.exports.findId = async () => {
         .limit(1)
         .toArray();
     return id;
+};
+
+module.exports.findValidId = async () => {
+    const db = await connectDB();
+    const id = await db.collection('user').find().project({ id: 1, _id: 0 })
+        .toArray();
+    return id;
+};
+
+module.exports.delete = async (id) => {
+    const db = await connectDB();
+    // eslint-disable-next-line quote-props
+    const data = await db.collection('user').deleteOne({ 'id': id });
+    return data;
 };
