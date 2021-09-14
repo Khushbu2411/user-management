@@ -1,6 +1,11 @@
 #topheader .navbar-nav li.active-class a{
     background-color: #005596;
     color: #fff;
+} 
+
+.text-size{
+    font-size: 12px;
+    color:teal;
 }
 
 .bg-color{

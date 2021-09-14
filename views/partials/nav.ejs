@@ -6,20 +6,20 @@
     </button>
   
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active-class">
-          <a class="nav-link " href="/index"><u>Home</u></a>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="navbar">
+        <li class="nav-item  active-class">
+          <a class="nav-link active" href="/index"><u>Home</u><span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link " href="/userinfo"><u>User Details</u></a>
+          <a class="nav-link active" href="/userinfo"><u>User Details</u></a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link " href="/register"><u>Register</u></a>
+          <a class="nav-link active " href="/register"><u>Register</u></a>
         </li>
         </ul>
         <ul class="navbar-nav  mt-2 mt-lg-0 justify-content-end">
         <li class="nav-item ">
-          <a class="nav-link " href="/logout"><u>Log out</u></a>
+          <a class="nav-link active" href="/logout"><u>Log out</u></a>
         </li>
       </ul>
     </div>
@@ -27,9 +27,10 @@
 </div>
 <script>
   $( '#topheader .navbar-nav a' ).on('click', 
-             function () {
+    function () {
      $( '#topheader .navbar-nav' ).find( 'li.active-class' )
      .removeClass( 'active-class' );
-     $( this ).parent( 'li' ).addClass( 'active-class' );
+    $( this ).parent( 'li' ).addClass( 'active-class' );
  });
- </script>
+
+</script> 
