@@ -3,15 +3,15 @@ const validator = require('../service/validator');
 
 const DBOperation = require('../helpers/DBOperation');
 
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
+module.exports.signupPage = (req, res) => {
+    res.render('signup');
+};
 
-module.exports.index = (req, res) => {
+module.exports.indexPage = (req, res) => {
     res.render('index');
 };
 
-module.exports.deleteEjs = (req, res) => {
+module.exports.deletePage = (req, res) => {
     res.render('delete', { id: req.query.id });
 };
 
@@ -20,15 +20,15 @@ module.exports.userinfo = async (req, res) => {
     res.render('userinfo', { data });
 };
 
-module.exports.create = (req, res) => {
+module.exports.registerPage = (req, res) => {
     res.render('users');
 };
 
-module.exports.update = (req, res) => {
+module.exports.updatePage = (req, res) => {
     res.render('update', { id: req.query.id });
 };
 
-module.exports.users = async (req, res) => {
+module.exports.listAllUsers = async (req, res) => {
     const query = {};
     // eslint-disable-next-line quote-props
     // constructor with string pattern as first argument
@@ -61,17 +61,22 @@ module.exports.users = async (req, res) => {
     }
 };
 
-module.exports.user = async (req, res) => {
+module.exports.insertUser = async (req, res) => {
     try {
+        if (req.body.confirmPassword) {
+            if (req.body.confirmPassword !== req.body.password) {
+                res.send('Password and confim password didn\'t match');
+            }
+        }
         const {
             firstName: firstname,
-            lastName: lastname,
+            lastName: lastname = '',
             email,
             password,
-            age,
-            mobile,
-            address,
-            active,
+            age = 0,
+            mobile = '',
+            address = '',
+            active = '',
             likes = '',
         } = req.body;
         const likesArr = likes.split(',');
@@ -105,7 +110,7 @@ module.exports.user = async (req, res) => {
     }
 };
 
-module.exports.userById = async (req, res) => {
+module.exports.getUserById = async (req, res) => {
     try {
         const query = { id: parseInt(req.params.id, 10) };
         const data = await DBOperation.find(query);

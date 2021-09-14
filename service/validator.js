@@ -29,16 +29,22 @@ module.exports.verifyRequest = (body) => {
 
 // eslint-disable-next-line consistent-return
 module.exports.validateInsertion = async (myObj) => {
-    const existEmail = await DBOperation.findOne({ email: myObj.email });
-    const existMobile = await DBOperation.findOne({ mobile: myObj.mobile });
-    if (existEmail != null) {
-        return 'Email already exists.';
-    // eslint-disable-next-line no-else-return
-    } else if (existMobile != null) {
-        return 'Mobile already exists.';
-    } else if ((myObj.password).length < 8) {
+    if (myObj.email !== '') {
+        const existEmail = await DBOperation.findOne({ email: myObj.email });
+        if (existEmail != null) {
+            return 'Email already exists.';
+        }
+    }
+    if (myObj.mobile !== '') {
+        const existMobile = await DBOperation.findOne({ mobile: myObj.mobile });
+        if (existMobile != null) {
+            return 'Mobile already exists.';
+        }
+    }
+    if ((myObj.password).length < 8) {
         return 'Password length is small. It should be minimum 8 character long.';
-    } else if ((myObj.mobile).length !== 10) {
+    // eslint-disable-next-line no-else-return
+    } else if (myObj.mobile !== '' && myObj.mobile.length !== 10) {
         return 'Mobile digit value should be equal to 10.';
     } else {
         const result = await DBOperation.insert(myObj);

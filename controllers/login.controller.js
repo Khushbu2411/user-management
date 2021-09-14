@@ -10,13 +10,23 @@ module.exports.login = (req, res) => {
     res.render('login');
 };
 
+module.exports.logout = async (req, res) => {
+    try {
+        res.clearCookie('jwt');
+        console.log('successfully logout');
+        res.render('logout');
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
 // eslint-disable-next-line consistent-return
 module.exports.verifyLogin = async (req, res) => {
     try {
         const data = await adminDBOperation.find(req.body.username);
         if (data[0]) {
             const validPass = await bcrypt.compare(req.body.password, data[0].password);
-            if (!validPass) return res.status(401).send('Mobile/Email or Password is wrong');
+            if (!validPass) return res.status(401).send('Password is wrong');
             // eslint-disable-next-line no-underscore-dangle
             const payload = { id: data[0]._id };
             // eslint-disable-next-line no-undef

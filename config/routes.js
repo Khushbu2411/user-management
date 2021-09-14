@@ -20,6 +20,14 @@ const adminLogin = require('../controllers/login.controller.js');
 const auth = require('../service/auth.js');
 
 router
+    .route('/signup')
+    .get(ctrUsers.signupPage);
+
+router
+    .route('/logout')
+    .get(auth.verifyUserToken, adminLogin.logout);
+
+router
     .route('/')
     .get(adminLogin.login);
 
@@ -29,11 +37,11 @@ router
 
 router
     .route('/index')
-    .get(auth.verifyUserToken, ctrUsers.index);
+    .get(auth.verifyUserToken, ctrUsers.indexPage);
 
 router
     .route('/register')
-    .get(auth.verifyUserToken, ctrUsers.create);
+    .get(auth.verifyUserToken, ctrUsers.registerPage);
 
 router
     .route('/userinfo')
@@ -41,19 +49,23 @@ router
 
 router
     .route('/users')
-    .get(auth.verifyUserToken, ctrUsers.users);
+    .get(auth.verifyUserToken, ctrUsers.listAllUsers);
 
 router
     .route('/user')
-    .post(urlencodedParser, auth.verifyUserToken, ctrUsers.user);
+    .post(urlencodedParser, auth.verifyUserToken, ctrUsers.insertUser);
+
+router
+    .route('/userRegister')
+    .post(urlencodedParser, ctrUsers.insertUser);
 
 router
     .route('/user/:id')
-    .get(auth.verifyUserToken, ctrUsers.userById);
+    .get(auth.verifyUserToken, ctrUsers.getUserById);
 
 router
     .route('/update')
-    .get(auth.verifyUserToken, ctrUsers.update);
+    .get(auth.verifyUserToken, ctrUsers.updatePage);
 
 router
     .route('/user/:id')
@@ -65,6 +77,6 @@ router
 
 router
     .route('/delete')
-    .get(auth.verifyUserToken, ctrUsers.deleteEjs);
+    .get(auth.verifyUserToken, ctrUsers.deletePage);
 
 module.exports = router;

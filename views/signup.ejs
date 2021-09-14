@@ -12,19 +12,19 @@
     <!-- Icon -->
     <div class="fadeIn first">
         <h2 id="title">User Management Portal</h2>
-        <h3>Admin Login</h3>
+        <h3>Sign Up Form for User</h3>
     </div>
 
     <!-- Login Form -->
-    <form action="/verifyLogin", method="POST">
-      <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
-      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
+    <form action="/userRegister", method="POST">
+      <input type="text" id="firstname" class="fadeIn second" name="firstName" placeholder="First Name" required>
+      <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email " required>
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password" required>
+      <input type="text" id="confirmPassword" class="fadeIn third" name="confirmPassword" placeholder="Confirm Password" required>
+      <input type="submit" class="fadeIn fourth" value="Sign Up">
     </form>
 
-    <div id="formFooter">
-      <a class="underlineHover" href="/signup">Sign up for a user</a>
-    </div> 
+
 
   </div>
 </div>
