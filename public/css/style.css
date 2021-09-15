@@ -1,7 +1,6 @@
-#topheader .navbar-nav li.active-class a{
-    background-color: #005596;
-    color: #fff;
-} 
+ .active-class, .nav-item:hover{
+    background-color: white;
+}  
 
 .text-size{
     font-size: 12px;
