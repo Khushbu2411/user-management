@@ -1,6 +1,10 @@
- .active-class, .nav-item:hover{
+.active-class{
     background-color: white;
 }  
+
+.nav-link:hover{
+    background-color: white;
+}
 
 .text-size{
     font-size: 12px;
