@@ -13,7 +13,6 @@ module.exports.login = (req, res) => {
 module.exports.logout = async (req, res) => {
     try {
         res.clearCookie('jwt');
-        console.log('successfully logout');
         res.render('logout');
     } catch (error) {
         res.status(500).send(error);

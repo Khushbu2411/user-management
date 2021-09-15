@@ -1,4 +1,9 @@
 {
+    "name": "docker_web_app",
+    "version": "1.0.0",
+    "description": "Node.js on Docker",
+    "author": "Khushbu Agrawal khushbu.agrawal@sendinblue.com",
+    "main": "server.js",
     "script": {
         "lint": "eslint"
     },
