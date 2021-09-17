@@ -3,6 +3,8 @@ const validator = require('../service/validator');
 
 const DBOperation = require('../helpers/DBOperation');
 
+const emailTrigger = require('../service/emailtrigger');
+
 module.exports.signupPage = (req, res) => {
     res.render('signup');
 };
@@ -80,9 +82,11 @@ module.exports.insertUser = async (req, res) => {
             likes = '',
         } = req.body;
         const likesArr = likes.split(',');
-        let setActive = false;
-        if (active === 'true' || active === 'True') {
+        let setActive;
+        if (active === 'true') {
             setActive = true;
+        } else if (active === 'false') {
+            setActive = false;
         }
         const id = await DBOperation.findId();
         // eslint-disable-next-line prefer-const
@@ -92,7 +96,7 @@ module.exports.insertUser = async (req, res) => {
             lastname,
             email,
             password,
-            age,
+            age: parseInt(age, 10),
             mobile,
             address,
             active: setActive,
@@ -100,6 +104,7 @@ module.exports.insertUser = async (req, res) => {
         };
         const data = await validator.validateInsertion(myObj);
         if (data === 'Success') {
+            await emailTrigger.mailTrigger(myObj.email);
             res.render('insert');
         } else {
             res.render('404', { message: data });

@@ -32,7 +32,7 @@
                 </div>
                 <div class="col">
                     <label for="email" class="form-label">Email: <span class='character'>*</span></label>
-                    <input type="text" class="form-control" id="email" name="email" required>                
+                    <input type="email" class="form-control" id="email" name="email" required>                
                 </div>
             </div>   
             <br> 
@@ -59,8 +59,11 @@
                     <input type="number" class="form-control" id="age" name="age">
                   </div>
                 <div class="col">
-                  <label for="active" class="form-label">Active: <span class='character'>*</span></label>
-                  <input type="text" class="form-control" id="active" name="active" required >
+                  <label for="active" class="form-label">Active: <span class='character'>*</span></label><br>
+                  <select class="form-control" aria-label="Default select example" id='active' name='active'>
+                    <option value=true>True</option>
+                    <option value=false>False</option>
+                  </select>
                 </div>
                 <div class="col">                
                     <label for="likes" class="form-label">Likes:</label>

@@ -24,6 +24,16 @@ module.exports.verifyRequest = (body) => {
             bodyObj[keys[i]] = body[keys[i]];
         }
     }
+    if (bodyObj.age) {
+        bodyObj.age = parseInt(bodyObj.age, 10);
+    }
+    if (bodyObj.active) {
+        if (bodyObj.active === 'true') {
+            bodyObj.active = true;
+        } else if (bodyObj.active === 'false') {
+            bodyObj.active = false;
+        }
+    }
     return bodyObj;
 };
 
