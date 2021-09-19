@@ -2,7 +2,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const express = require('express');
 
+require('dotenv').config();
+
 const app = express();
+
+const PORT = process.env.PORT || 3000;
 
 const cookieParser = require('cookie-parser');
 
@@ -26,4 +30,6 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(express.static('public/js'));
 
-app.listen(3000);
+console.log('listening to the port: ', PORT);
+
+app.listen(PORT);

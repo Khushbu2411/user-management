@@ -22,7 +22,7 @@ module.exports.logout = async (req, res) => {
 // eslint-disable-next-line consistent-return
 module.exports.verifyLogin = async (req, res) => {
     try {
-        const data = await adminDBOperation.find(req.body.username);
+        const data = await adminDBOperation.find({ username: req.body.username });
         if (data[0]) {
             const validPass = await bcrypt.compare(req.body.password, data[0].password);
             if (!validPass) return res.status(401).send('Password is wrong');
@@ -35,7 +35,8 @@ module.exports.verifyLogin = async (req, res) => {
         } else {
             res.send('Invalid login for admin');
         }
-    } catch {
+    } catch (err) {
+        console.log(`Error in verifyLogin ${err}`);
         res.status(500)
             .send('Something went wrong on server side. ');
     }
