@@ -6,9 +6,39 @@
     background-color: white;
 }
 
-.text-size{
-    font-size: 12px;
-    color:teal;
+.col i{
+    position: absolute;
+    top: 43px;
+    right: 25px;
+    visibility: hidden;
+}
+
+.col.success i.fa-check-circle{
+    color:  #2ecc71;
+    visibility: visible;
+}
+
+.col.error i.fa-exclamation-circle{
+    visibility: visible;
+    color:  #e74c3c;
+}
+
+.col small{
+    visibility: hidden;
+}
+
+.col.error small{
+    visibility: visible;
+    color:  #e74c3c;
+
+}
+
+.col.success input{
+    border-color: #2ecc71;
+}
+
+.col.error input{
+    border-color: #e74c3c;
 }
 
 .bg-color{
@@ -78,7 +108,6 @@ header h2{
     margin-left:43%;
     margin-right:43%;
 }
-
 
 .filterForm{
     font-family: Roboto;

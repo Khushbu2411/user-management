@@ -26,8 +26,9 @@ module.exports.registerPage = (req, res) => {
     res.render('users');
 };
 
-module.exports.updatePage = (req, res) => {
-    res.render('update', { id: req.query.id });
+module.exports.updatePage = async (req, res) => {
+    const data = await DBOperation.find({ id: parseInt(req.query.id, 10) });
+    res.render('update', { id: req.query.id, data });
 };
 
 module.exports.listAllUsers = async (req, res) => {
@@ -71,8 +72,8 @@ module.exports.insertUser = async (req, res) => {
             }
         }
         const {
-            firstName: firstname,
-            lastName: lastname = '',
+            firstname,
+            lastname = '',
             email,
             password,
             age = 0,

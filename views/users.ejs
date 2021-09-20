@@ -9,6 +9,7 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     </head>
     <body>      
@@ -18,45 +19,61 @@
         </header>
         <div class="one">
             <h2 class='register'><u>Register a user</u></h2>
-            <form action="/user" method="POST" class="formMaintain">
+            <form id="form" action="/user" method="POST" class="formMaintain" >
                 <div class="row">
                     <div class="col">              
                         <label for="firstName" class="form-label">First Name: <span class='character'>*</span></label>
                         <input type ="text" id="firstName" name="firstName" class="form-control" aria-describedby="firstnameHelp" required>
-                        <div id="firstnameHelp" class="form-text text-size">First name should contain only letters.</div>
+                        <i class="fa fa-check-circle"></i>
+                        <i class='fa fa-exclamation-circle'></i>
+                        <small>Error message</small>
+                        <!-- <div id="firstnameHelp" class="form-text text-size">First name should contain only letters.</div> -->
                     </div>
                 <div class="col">
                     <label for="lastName" class="form-label">Last Name: <span class='character'>*</span></label>
                     <input type ="text" id="lastName" name="lastName" class="form-control" aria-describedby="lastnameHelp" required>
-                    <div id="lastnameHelp" class="form-text text-size">Last name should contain only letters.</div>
+                    <i class="fa fa-check-circle"></i>
+                    <i class='fa fa-exclamation-circle'></i>
+                    <small>Error message</small>    
+                    <!-- <div id="lastnameHelp" class="form-text text-size">Last name should contain only letters.</div> -->
                 </div>
                 <div class="col">
                     <label for="email" class="form-label">Email: <span class='character'>*</span></label>
-                    <input type="email" class="form-control" id="email" name="email" required>                
+                    <input type="email" class="form-control" id="email" name="email" required>  
+                    <i class="fa fa-check-circle"></i>
+                    <i class='fa fa-exclamation-circle'></i>
+                    <small>Error message</small>                 
                 </div>
             </div>   
             <br> 
             <div class="row">
                 <div class="col">
                     <label for="password" class="form-label">Password: <span class='character'>*</span></label>
-                    <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp" required>  
-                    <div id="passwordHelp" class="form-text text-size">Password must be greater than 8 characters.</div>
+                    <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp" required> 
+                    <i class="fa fa-check-circle"></i>
+                    <i class='fa fa-exclamation-circle'></i>
+                    <small>Error message</small>    
+                     
+                    <!-- <div id="passwordHelp" class="form-text text-size">Password must be greater than 8 characters.</div> -->
                 </div>
                 <div class="col">
                     <label for="address" class="form-label">Address: <span class='character'>*</span></label>
-                    <input type ="text" id="address" name="address" class="form-control" required>
+                    <input type ="text" id="address" name="address" class="form-control" required>   
                 </div>
                 <div class="col">
                     <label for="mobile" class="form-label">Mobile: <span class='character'>*</span></label>
                     <input type="text" class="form-control" id="mobile" name="mobile" aria-describedby="mobileHelp" required>
-                    <div id="passwordHelp" class="form-text text-size">Mobile digit length must be 10.</div>
+                    <i class="fa fa-check-circle"></i>
+                    <i class='fa fa-exclamation-circle'></i>
+                    <small>Error message</small>    
+                    <!-- <div id="passwordHelp" class="form-text text-size">Mobile digit length must be 10.</div> -->
                 </div>
             </div> 
             <br>  
             <div class="row">
                 <div class="col">
                     <label for="age" class="form-label">Age:</label>
-                    <input type="number" class="form-control" id="age" name="age">
+                    <input type="number" class="form-control" id="age" name="age">    
                   </div>
                 <div class="col">
                   <label for="active" class="form-label">Active: <span class='character'>*</span></label><br>
@@ -71,12 +88,103 @@
                     <div id="likesHelp" class="form-text">--Likes separated by commas.</div>
                 </div>    
             </div>  
-                <button type="submit" class="clickable_button">Submit</button>    
+                <button type="submit" class="clickable_button" id="submit">Submit</button>    
             </form>
             <br>
         </div>
         <br>
         <%- include('./partials/footer.ejs') %>
+
+        <script>
+            const form = document.getElementById('form');
+            const firstname = document.getElementById('firstName');
+            const lastname = document.getElementById('lastName');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const mobile = document.getElementById('mobile');
+            const active = document.getElementById('active');
+            const age = document.getElementById('age');
+            const address = document.getElementById('address');
+            const likes = document.getElementById('likes');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                checkInputs();
+            }); 
+            const value= {
+                age: age.value, 
+                likes: likes.value,
+                password: likes.value,
+                firstname: firstname.value, 
+                lastname: lastname.value, 
+                email: email.value,
+                mobile: mobile.value,
+                active: active.value,
+                address: address.value, 
+            }  
+            function checkInputs(){
+                const firstnameValue = firstname.value.trim();
+                const lastnameValue =  lastname.value.trim();
+                const emailValue = email.value.trim();
+                const passwordValue = password.value.trim();
+                const mobileValue = mobile.value.trim();
+                var count = 0;
+                var letters = /^[A-Za-z]+$/;
+                if(!firstnameValue.match(letters)){
+                    setErrorFor(firstName,'First Name must contain only letters');
+                } else {
+                    count+=1;
+                    setSuccessFor(firstName);
+                }
+                if(!lastnameValue.match(letters)){
+                    setErrorFor(lastName,'Last Name must contain only letters');
+                } else {
+                    count+=1;
+                    setSuccessFor(lastName);
+                }
+                if(passwordValue.length<8){
+                    setErrorFor(password,'Password length must greater than or equal to 8');
+                } else {
+                    count+=1;
+                    setSuccessFor(password);
+                }
+                let isnum = /^\d+$/.test(mobileValue);
+                if(!isnum || mobileValue.length!==10){
+                        setErrorFor(mobile,'Mobile must be digits and of length 10');
+                } else {
+                        count+=1;
+                        setSuccessFor(mobile);
+                }
+                const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if(re.test(String(email))){
+                    setErrorFor(email,'Email must be valid');
+                } else {
+                    count+=1;
+                    setSuccessFor(email);
+                }
+                console.log(count);
+                // if(count===5){
+                //     await axios.post('http://localhost:3000/user', value, {
+                //     headers: {
+                //         'Content-Type': 'application/json'                       
+                //     }})
+                //     .then(response => {
+                //         console.log(response.data);
+                // })
+                // .catch(error => console.error(error));
+                // }
+            }
+            function setErrorFor(input, message) {
+                const  formControl = input.parentElement;
+                const small = formControl.querySelector('small');
+                small.innerText = message;
+                formControl.className = 'col error';
+            }
+
+            function setSuccessFor(input){
+                const  formControl = input.parentElement;
+                formControl.className = 'col success';
+
+            }
+        </script>
     </body>
 </html>
-    
