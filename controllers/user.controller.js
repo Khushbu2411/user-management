@@ -3,8 +3,18 @@ const validator = require('../service/validator');
 
 const DBOperation = require('../helpers/DBOperation');
 
+const emailTrigger = require('../service/emailtrigger');
+
 module.exports.signupPage = (req, res) => {
     res.render('signup');
+};
+
+module.exports.insert = (req, res) => {
+    res.render('insert');
+};
+
+module.exports.error = (req, res) => {
+    res.render('404', { message: req.query.data });
 };
 
 module.exports.indexPage = (req, res) => {
@@ -24,8 +34,9 @@ module.exports.registerPage = (req, res) => {
     res.render('users');
 };
 
-module.exports.updatePage = (req, res) => {
-    res.render('update', { id: req.query.id });
+module.exports.updatePage = async (req, res) => {
+    const data = await DBOperation.find({ id: parseInt(req.query.id, 10) });
+    res.render('update', { id: req.query.id, data });
 };
 
 module.exports.listAllUsers = async (req, res) => {
@@ -69,8 +80,8 @@ module.exports.insertUser = async (req, res) => {
             }
         }
         const {
-            firstName: firstname,
-            lastName: lastname = '',
+            firstname,
+            lastname = '',
             email,
             password,
             age = 0,
@@ -80,9 +91,11 @@ module.exports.insertUser = async (req, res) => {
             likes = '',
         } = req.body;
         const likesArr = likes.split(',');
-        let setActive = false;
-        if (active === 'true' || active === 'True') {
+        let setActive;
+        if (active === 'true') {
             setActive = true;
+        } else if (active === 'false') {
+            setActive = false;
         }
         const id = await DBOperation.findId();
         // eslint-disable-next-line prefer-const
@@ -92,7 +105,7 @@ module.exports.insertUser = async (req, res) => {
             lastname,
             email,
             password,
-            age,
+            age: parseInt(age, 10),
             mobile,
             address,
             active: setActive,
@@ -100,9 +113,10 @@ module.exports.insertUser = async (req, res) => {
         };
         const data = await validator.validateInsertion(myObj);
         if (data === 'Success') {
-            res.render('insert');
+            await emailTrigger.mailTrigger(myObj.email);
+            res.send('insert');
         } else {
-            res.render('404', { message: data });
+            res.send(data);
         }
     } catch {
         res.status(500)

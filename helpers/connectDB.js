@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { MongoClient } = require('mongodb');
 
-const url = 'mongodb://localhost:27017';
+const url = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 const client = new MongoClient(url);
 
 const databaseName = 'user-management';

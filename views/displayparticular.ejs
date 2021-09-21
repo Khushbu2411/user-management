@@ -53,15 +53,16 @@
                 document.getElementById('deleteButton').addEventListener("click", function (event) {
                     event.preventDefault();
                     let api='http://localhost:3000/user/'+ '<%= data[0].id %>';
-                    axios.delete(api)
-                        .then(response => {
-                            console.log(response.data);
-                            if(response.data === 'Successfully deleted'){
-                                location.href = 'http://localhost:3000/delete/?id=' + '<%=data[0].id %>';
-                            }
-                        })
-                    .catch(error => console.error(error));    
-                });
+                    if (confirm('Are you sure, you want to delete?')) {
+                        axios.delete(api)
+                            .then(response => {
+                                if(response.data === 'Successfully deleted'){
+                                    location.href = 'http://localhost:3000/delete/?id=' + '<%=data[0].id %>';
+                                }
+                            })
+                        .catch(error => console.error(error));    
+                    }   
+                });     
             </script>  
            </span> 
             <hr>       
@@ -69,4 +70,4 @@
 <br><br>
 <%- include('./partials/footer.ejs') %>
 
-</body>        
+</body>
