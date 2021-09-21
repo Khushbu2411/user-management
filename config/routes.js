@@ -20,6 +20,14 @@ const adminLogin = require('../controllers/login.controller.js');
 const auth = require('../service/auth.js');
 
 router
+    .route('/insert')
+    .get(ctrUsers.insert);
+
+router
+    .route('/error')
+    .get(ctrUsers.error);
+
+router
     .route('/signup')
     .get(ctrUsers.signupPage);
 

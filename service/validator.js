@@ -51,6 +51,7 @@ module.exports.validateInsertion = async (myObj) => {
             return 'Mobile already exists.';
         }
     }
+    console.log(myObj.password);
     if ((myObj.password).length < 8) {
         return 'Password length is small. It should be minimum 8 character long.';
     // eslint-disable-next-line no-else-return

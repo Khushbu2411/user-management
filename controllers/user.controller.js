@@ -9,6 +9,14 @@ module.exports.signupPage = (req, res) => {
     res.render('signup');
 };
 
+module.exports.insert = (req, res) => {
+    res.render('insert');
+};
+
+module.exports.error = (req, res) => {
+    res.render('404', { message: req.query.data });
+};
+
 module.exports.indexPage = (req, res) => {
     res.render('index');
 };
@@ -106,9 +114,9 @@ module.exports.insertUser = async (req, res) => {
         const data = await validator.validateInsertion(myObj);
         if (data === 'Success') {
             await emailTrigger.mailTrigger(myObj.email);
-            res.render('insert');
+            res.send('insert');
         } else {
-            res.render('404', { message: data });
+            res.send(data);
         }
     } catch {
         res.status(500)
