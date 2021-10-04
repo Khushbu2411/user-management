@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0" >
         <li class="nav-item ">
-          <a class="nav-link " href="/index"><u>Home</u><span class="sr-only">(current)</span></a>
+          <a class="nav-link" id="index" href="/index"><u>Home</u><span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item ">
           <a class="nav-link " href="/userinfo"><u>User Details</u></a>
@@ -16,6 +16,11 @@
         <li class="nav-item ">
           <a class="nav-link  " href="/register"><u>Register</u></a>
         </li>
+        <script>
+          var link = document.getElementById('index');
+          sendinblue.trackLink(link, {'casestudy': 'index' });
+        </script>
+  
         </ul>
         <ul class="navbar-nav  mt-2 mt-lg-0 justify-content-end">
         <li class="nav-item ">
